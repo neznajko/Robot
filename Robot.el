@@ -36,11 +36,11 @@ defined by p and q points in the range
   "Oriented angle between u and v,
 (-pi, pi]"
   (let* ((a (phi ui uf))
-		 (b (phi vi vf))
-		 (c (- b a)))
-	(if (> c pi)
-		(- c _2pi)
-	  c)))
+         (b (phi vi vf))
+         (c (- b a)))
+    (if (> c pi)
+        (- c _2pi)
+      c)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun cons-point (str)
@@ -100,37 +100,37 @@ defined by p and q points in the range
     (setq fpnt (pop bf))
     (dolist (c bf)
       (setq V (cons c nil)
-			U (remove c bf))
+            U (remove c bf))
       (_0xFF01 c fpnt U V))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun pinst (inst p)
   "Point Instructon"
   (let ((x (car p))
-		(y (car (cdr p))))
-	(format "%s %d %d\n" inst x y)))
+        (y (car (cdr p))))
+    (format "%s %d %d\n" inst x y)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun program ()
   "Convert first stk route to program."
   (switch-to-buffer "program")
   (let* ((V (car stk))
-		 (f fpnt)
-		 (k (length V))
-		 (V (cons f (append V (list f))))
-		 (i 0)
-		 (n) (a) (b) (c))
-	(insert (pinst "ORIENTATION" 
-				   (car (cdr V))))
-	(while (< i k)
-	  (setq a (nth (+ 0 i) V)
-			b (nth (+ 1 i) V)
-			c (nth (+ 2 i) V)
-			n (ngle a b b c))
-	  (if (< n 0) (insert "TURN-RIGHT\n")
-		(insert "TURN-LEFT\n"))
-	  (insert (pinst "MOVE-TO" c))
-	  (cl-incf i)))
+         (f fpnt)
+         (k (length V))
+         (V (cons f (append V (list f))))
+         (i 0)
+         (n) (a) (b) (c))
+    (insert (pinst "ORIENTATION" 
+                   (car (cdr V))))
+    (while (< i k)
+      (setq a (nth (+ 0 i) V)
+            b (nth (+ 1 i) V)
+            c (nth (+ 2 i) V)
+            n (ngle a b b c))
+      (if (< n 0) (insert "TURN-RIGHT\n")
+        (insert "TURN-LEFT\n"))
+      (insert (pinst "MOVE-TO" c))
+      (cl-incf i)))
   (insert "STOP\n"))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; log:
